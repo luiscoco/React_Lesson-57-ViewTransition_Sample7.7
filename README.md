@@ -1,5 +1,4 @@
-# Custom Types ViewTransition Demo (React 19 canary)
-
+# Custom Types ViewTransition Demo
 Vite + React 19 canary sample that shows how to label transitions with custom types and map them to different animations. The demo cycles through three pages and applies slide-in/slide-out animations based on whether you navigated forward or back.
 
 ## What this demo shows
