@@ -2,12 +2,43 @@
 
 Vite + React 19 canary sample that shows how to label transitions with custom types and map them to different animations. The demo cycles through three pages and applies slide-in/slide-out animations based on whether you navigated forward or back.
 
-## Features
+## What this demo shows
 
-- Uses `startTransition` + `addTransitionType` to tag navigation as forward/back.
-- `ViewTransition` maps those custom types to CSS classes (`vt-slide-left` and `vt-slide-right`).
-- Simple page carousel (Page A/B/C) so you can see each transition type in action.
-- Minimal, copy-pastable CSS keyframes demonstrating how to author per-type animations.
+- Tagging navigation intent: buttons call `startTransition` and `addTransitionType` so React knows whether you're going forward or backward.
+
+  ```jsx
+  startTransition(() => {
+    addTransitionType('navigation-forward');
+    setIndex(prev => (prev + 1) % pages.length);
+  });
+  ```
+
+- Mapping custom types to animations: `ViewTransition` assigns the custom types to CSS classes so each direction can animate differently.
+
+  ```jsx
+  <ViewTransition
+    default={{
+      'navigation-back': 'vt-slide-right',
+      'navigation-forward': 'vt-slide-left',
+    }}
+  >
+    <div className="page">
+      <h2>{pages[index]}</h2>
+      <p>This page animates differently depending on navigation type.</p>
+    </div>
+  </ViewTransition>
+  ```
+
+- Minimal CSS for per-type motion: slide left when moving forward, slide right when going back.
+
+  ```css
+  ::view-transition-new(.vt-slide-left) { animation: vt-slide-left-in 250ms; }
+  ::view-transition-old(.vt-slide-left) { animation: vt-slide-left-out 250ms; }
+  ::view-transition-new(.vt-slide-right) { animation: vt-slide-right-in 250ms; }
+  ::view-transition-old(.vt-slide-right) { animation: vt-slide-right-out 250ms; }
+  ```
+
+- Simple carousel of Page A/B/C so you can trigger both transition types quickly.
 
 ## How to run
 
